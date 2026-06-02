@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KrushiMitra Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-darkest: #0A2E1F;
+  --green-dark: #1B4332;
+  --green-mid: #2D6A4F;
+  --green-light: #52B788;
+  --green-pale: #D8F3DC;
+  --green-faint: #F0FDF4;
+  --gold: #F59E0B;
+  --gold-pale: #FEF3C7;
+  --terra: #C05621;
+  --terra-pale: #FFF7ED;
+  --sky: #0EA5E9;
+  --sky-pale: #E0F2FE;
+  --cream: #FFFBF0;
+  --text-dark: #111827;
+  --text-mid: #374151;
+  --text-light: #6B7280;
+  --border: #E5E7EB;
+  --sidebar-w: 260px;
+  --white: #FFFFFF;
+  --danger: #DC2626;
+  --purple: #7C3AED;
+  --purple-pale: #F3F0FF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  background: #F8FAFC;
+  color: var(--text-dark);
+  display: flex;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--green-dark);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-logo {
+  display: flex; align-items: center; gap: 12px;
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(82,183,136,0.2);
+}
+.sidebar-logo .icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #52B788, #2D6A4F);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.sidebar-logo .brand { color: white; }
+.sidebar-logo .brand .name { font-size: 16px; font-weight: 700; }
+.sidebar-logo .brand .tagline { font-size: 10px; opacity: 0.5; letter-spacing: 0.5px; }
+
+.farmer-card {
+  margin: 16px 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(82,183,136,0.25);
+  border-radius: 14px;
+  padding: 14px;
+}
+.farmer-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.farmer-name { color: white; font-size: 14px; font-weight: 600; }
+.farmer-village { color: rgba(255,255,255,0.5); font-size: 11px; margin-top: 2px; }
+.farmer-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.f-tag {
+  background: rgba(82,183,136,0.2);
+  border: 1px solid rgba(82,183,136,0.3);
+  color: #A7F3D0;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.nav-section { padding: 8px 0; }
+.nav-label {
+  color: rgba(255,255,255,0.3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 8px 20px 4px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 20px;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+  font-size: 13.5px;
+  margin: 1px 0;
+}
+.nav-item:hover { color: white; background: rgba(255,255,255,0.06); }
+.nav-item.active {
+  color: white;
+  background: rgba(82,183,136,0.18);
+  border-left-color: #52B788;
+  font-weight: 600;
+}
+.nav-item .icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--green-dark);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.lang-sidebar {
+  margin-top: auto;
+  padding: 16px 12px;
+  border-top: 1px solid rgba(82,183,136,0.15);
+}
+.lang-label { color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.lang-pills { display: flex; gap: 6px; }
+.lang-pill {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 12px;
+  background: transparent;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  transition: all 0.2s;
+}
+.lang-pill.active { background: var(--green-light); color: white; border-color: var(--green-light); }
+
+/* ========== MAIN ========== */
+.main-area {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* TOP HEADER */
+.topbar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0;
+  z-index: 100;
+}
+.page-title { font-size: 18px; font-weight: 700; color: var(--green-dark); }
+.page-breadcrumb { font-size: 12px; color: var(--text-light); margin-top: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.topbar-btn {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--green-faint);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 18px;
+  position: relative;
+}
+.notif-dot {
+  position: absolute; top: 6px; right: 7px;
+  width: 8px; height: 8px;
+  background: #EF4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.weather-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--sky-pale);
+  border: 1px solid #BAE6FD;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 13px;
+  color: #0369A1;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ========== CONTENT PAGES ========== */
+.page { display: none; padding: 28px; }
+.page.active { display: block; }
+
+/* GREETING SECTION */
+.greeting-wrap {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 60%, #3d9970 100%);
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.greeting-wrap::before {
+  content: '🌾';
+  position: absolute; right: 200px; top: -20px;
+  font-size: 120px; opacity: 0.1;
+}
+.greeting-text { color: white; }
+.greeting-text .greet { font-size: 13px; opacity: 0.7; margin-bottom: 4px; }
+.greeting-text .name { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.greeting-text .info { font-size: 13px; opacity: 0.7; }
+.greeting-weather {
+  text-align: center;
+  color: white;
+}
+.w-temp { font-size: 48px; font-weight: 300; line-height: 1; }
+.w-icon { font-size: 40px; margin-bottom: 6px; }
+.w-loc { font-size: 12px; opacity: 0.6; }
+.greeting-actions { display: flex; gap: 10px; flex-direction: column; }
+.g-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  transition: all 0.2s;
+}
+.g-btn.primary { background: #FCD34D; color: var(--green-dark); }
+.g-btn.outline { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+/* STAT CARDS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 16px 16px;
+}
+.stat-card.green::after { background: var(--green-light); }
+.stat-card.gold::after { background: var(--gold); }
+.stat-card.sky::after { background: var(--sky); }
+.stat-card.terra::after { background: var(--terra); }
+.stat-icon { font-size: 28px; margin-bottom: 12px; }
+.stat-val { font-size: 28px; font-weight: 800; color: var(--text-dark); line-height: 1; }
+.stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+.stat-delta { font-size: 11px; color: #10B981; font-weight: 600; margin-top: 6px; }
+.stat-delta.neg { color: var(--danger); }
+
+/* TWO COLUMN GRID */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.three-col { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+/* CARDS */
+.card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.card-head-title { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+.card-head-sub { font-size: 11px; color: var(--text-light); margin-top: 1px; }
+.card-head-action {
+  font-size: 12px; color: var(--green-mid);
+  font-weight: 600; cursor: pointer;
+  background: var(--green-faint);
+  padding: 5px 12px; border-radius: 8px;
+  border: 1px solid var(--green-pale);
+}
+.card-body { padding: 20px; }
+
+/* CROP TABLE */
+.crop-table { width: 100%; border-collapse: collapse; }
+.crop-table th {
+  text-align: left; padding: 10px 12px;
+  font-size: 11px; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  background: #F9FAFB;
+  border-bottom: 1px solid var(--border);
+}
+.crop-table td {
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  vertical-align: middle;
+}
+.crop-table tr:last-child td { border-bottom: none; }
+.crop-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+}
+.cb-growing { background: var(--green-pale); color: #166534; }
+.cb-ready   { background: #FEF9C3; color: #854D0E; }
+.cb-sold    { background: #DBEAFE; color: #1D4ED8; }
+.progress-bar {
+  width: 100%; height: 6px; background: #F3F4F6;
+  border-radius: 10px; overflow: hidden;
+}
+.progress-fill { height: 100%; border-radius: 10px; }
+.pf-green { background: var(--green-light); }
+.pf-gold  { background: var(--gold); }
+
+/* WEATHER WIDGET */
+.weather-detail { padding: 0; }
+.w-main {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  padding: 20px;
+  color: white;
+}
+.w-big-temp { font-size: 56px; font-weight: 200; line-height: 1; }
+.w-condition { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+.w-city { font-size: 12px; opacity: 0.6; }
+.w-device { font-size: 11px; background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 20px; margin-top: 8px; display: inline-block; }
+.w-details-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+.w-detail-item {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.w-detail-item:nth-child(2n) { border-right: none; }
+.w-detail-item:nth-last-child(-n+2) { border-bottom: none; }
+.w-d-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+.w-d-val { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-top: 2px; }
+.w-d-unit { font-size: 11px; color: var(--text-light); }
+.sensor-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: #F0FDF4; border: 1px solid var(--green-pale);
+  border-radius: 8px; padding: 10px 14px; margin: 12px 12px 0;
+  font-size: 12px; color: var(--green-mid);
+}
+.sensor-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+/* EXPENSE CHART BARS */
+.expense-bars { padding: 16px 0 0; }
+.exp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.exp-label { width: 100px; font-size: 12px; color: var(--text-mid); }
+.exp-bar-wrap { flex: 1; height: 22px; background: #F3F4F6; border-radius: 6px; overflow: hidden; position: relative; }
+.exp-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 600; color: white; transition: width 0.8s ease; }
+.exp-amount { font-size: 12px; font-weight: 700; color: var(--text-dark); width: 70px; text-align: right; }
+
+/* DISEASE SECTION */
+.disease-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.disease-card {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.disease-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.disease-img { height: 80px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+.disease-img.red { background: #FEF2F2; }
+.disease-img.yellow { background: #FEFCE8; }
+.disease-img.purple { background: var(--purple-pale); }
+.disease-info { padding: 12px; }
+.disease-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.disease-crop { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+.disease-risk {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px;
+  margin-top: 6px;
+}
+.risk-high { background: #FEE2E2; color: #B91C1C; }
+.risk-med  { background: #FEF9C3; color: #854D0E; }
+.risk-low  { background: var(--green-pale); color: #166534; }
+
+/* MARKETPLACE */
+.market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.market-card {
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.market-card:hover { border-color: var(--green-light); box-shadow: 0 4px 16px rgba(52,183,136,0.15); }
+.market-img { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+.market-body { padding: 14px; }
+.m-name { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+.m-qty { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.m-price { font-size: 20px; font-weight: 800; color: var(--green-mid); margin-top: 8px; }
+.m-price span { font-size: 12px; font-weight: 400; color: var(--text-light); }
+.m-delta { font-size: 11px; color: #10B981; font-weight: 600; }
+.m-delta.down { color: var(--danger); }
+.m-seller { font-size: 11px; color: var(--text-light); margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+.m-btn {
+  width: 100%; padding: 9px;
+  background: var(--green-mid); color: white;
+  border: none; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+  cursor: pointer; margin-top: 10px;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+}
+
+/* UPLOAD AREA */
+.upload-zone {
+  border: 2px dashed var(--green-pale);
+  border-radius: 16px;
+  padding: 36px;
+  text-align: center;
+  background: var(--green-faint);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.upload-zone:hover { border-color: var(--green-light); background: #DCFCE7; }
+.upload-icon { font-size: 48px; margin-bottom: 12px; }
+.upload-txt { font-size: 15px; font-weight: 600; color: var(--green-dark); }
+.upload-sub { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+
+/* ADMIN MAP */
+.map-placeholder {
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  border-radius: 14px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.map-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--green-mid);
+  opacity: 0.6;
+  animation: mapPulse 2s ease-in-out infinite;
+}
+@keyframes mapPulse { 0%,100%{transform:scale(1);opacity:0.6;} 50%{transform:scale(1.4);opacity:0.9;} }
+
+/* FORM STYLES */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+.form-input, .form-select {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-dark);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  outline: none;
+}
+.form-input:focus, .form-select:focus {
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+}
+.btn-primary {
+  padding: 12px 24px;
+  background: var(--green-mid);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--green-dark); }
+.btn-outline {
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--green-mid);
+  border: 1.5px solid var(--green-light);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+}
+
+/* TIMELINE */
+.timeline { padding: 0; }
+.tl-item { display: flex; gap: 14px; padding: 0 0 20px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.tl-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.tl-line { width: 2px; flex: 1; background: var(--border); margin-top: 4px; }
+.tl-content { flex: 1; }
+.tl-title { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.tl-desc { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.tl-date { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+/* AI RESULT */
+.ai-result {
+  background: linear-gradient(135deg, #F3F0FF, #EDE9FE);
+  border: 1px solid #C4B5FD;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 16px;
+}
+.ai-result-title { font-size: 15px; font-weight: 700; color: #5B21B6; margin-bottom: 8px; }
+.ai-result-body { font-size: 13px; color: #6D28D9; line-height: 1.6; }
+
+/* SECTION HEADING */
+.section-hd {
+  font-size: 20px; font-weight: 800;
+  color: var(--green-dark);
+  margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-hd .hdico { font-size: 24px; }
+
+/* ALERTS */
+.alert {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.alert.warning { background: #FFFBEB; border-color: #FDE68A; color: #92400E; }
+.alert.info    { background: var(--sky-pale); border-color: #BAE6FD; color: #0C4A6E; }
+.alert.success { background: var(--green-faint); border-color: var(--green-pale); color: #166534; }
+
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge-green { background: var(--green-pale); color: #166534; }
+.badge-gold  { background: #FEF9C3; color: #854D0E; }
+.badge-sky   { background: var(--sky-pale); color: #0369A1; }
+.badge-red   { background: #FEE2E2; color: #991B1B; }
+</style>
+</head>
+<body>
+
+<!-- ======= SIDEBAR ======= -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">🌱</div>
+    <div class="brand">
+      <div class="name">KrushiMitra</div>
+      <div class="tagline" id="sl-tagline">कृषिमित्र</div>
+    </div>
+  </div>
+
+  <div class="farmer-card">
+    <div class="farmer-avatar">👨‍🌾</div>
+    <div class="farmer-name" id="fc-name">रामराव पाटील</div>
+    <div class="farmer-village" id="fc-village">📍 सांगली जिल्हा, पलूस तालुका</div>
+    <div class="farmer-tags">
+      <span class="f-tag" id="fc-t1">ऊस</span>
+      <span class="f-tag" id="fc-t2">द्राक्ष</span>
+      <span class="f-tag" id="fc-t3">PM किसान ✓</span>
+    </div>
+  </div>
+
+  <nav class="nav-section">
+    <div class="nav-label" id="nl-main">मुख्य</div>
+    <div class="nav-item active" onclick="showPage('dashboard', this)"><span class="icon">🏠</span> <span id="n-dash">डॅशबोर्ड</span></div>
+    <div class="nav-item" onclick="showPage('crops', this)"><span class="icon">🌾</span> <span id="n-crop">माझी पिके</span></div>
+    <div class="nav-item" onclick="showPage('weather', this)"><span class="icon">🌤</span> <span id="n-wthr">हवामान</span></div>
+    <div class="nav-item" onclick="showPage('expenses', this)"><span class="icon">💰</span> <span id="n-exp">खर्च नोंदी</span></div>
+    <div class="nav-label" id="nl-svc">सेवा</div>
+    <div class="nav-item" onclick="showPage('disease', this)"><span class="icon">🔬</span> <span id="n-dis">रोग निदान</span> <span class="nav-badge">AI</span></div>
+    <div class="nav-item" onclick="showPage('market', this)"><span class="icon">🛒</span> <span id="n-mkt">बाजार</span></div>
+    <div class="nav-item" onclick="showPage('schemes', this)"><span class="icon">📋</span> <span id="n-sch">सरकारी योजना</span></div>
+    <div class="nav-label" id="nl-admin">प्रशासन</div>
+    <div class="nav-item" onclick="showPage('admin', this)"><span class="icon">🗺</span> <span id="n-adm">Admin नकाशा</span></div>
+    <div class="nav-item" onclick="window.location.href='krushi-login.html'"><span class="icon">🚪</span> <span id="n-out">लॉगआउट</span></div>
+  </nav>
+
+  <div class="lang-sidebar">
+    <div class="lang-label">भाषा / Language</div>
+    <div class="lang-pills">
+      <button class="lang-pill active" onclick="setLang('mr')">मराठी</button>
+      <button class="lang-pill" onclick="setLang('hi')">हिंदी</button>
+      <button class="lang-pill" onclick="setLang('en')">Eng</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ======= MAIN AREA ======= -->
+<div class="main-area">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <div class="page-title" id="pt">🏠 डॅशबोर्ड</div>
+      <div class="page-breadcrumb" id="pb">KrushiMitra › डॅशबोर्ड</div>
+    </div>
+    <div class="topbar-right">
+      <div class="weather-pill" onclick="showPage('weather', null)">☁️ 29°C · सांगली <span style="margin-left:4px;font-size:10px">NodeMCU ●</span></div>
+      <div class="topbar-btn">🔔 <div class="notif-dot"></div></div>
+      <div class="topbar-btn" onclick="showPage('crops', null)">➕</div>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div class="page active" id="page-dashboard">
+    <div class="greeting-wrap">
+      <div class="greeting-text">
+        <div class="greet" id="greet-txt">🙏 नमस्कार,</div>
+        <div class="name" id="greet-name">रामराव पाटील</div>
+        <div class="info" id="greet-info">📅 शुक्रवार, 2 मे 2025 · सांगली · खरीफ हंगाम 2025</div>
+      </div>
+      <div class="greeting-weather">
+        <div class="w-icon">⛅</div>
+        <div class="w-temp">29°C</div>
+        <div class="w-loc" id="greet-wthr">सांगली जिल्हा · अंशतः ढगाळ</div>
+      </div>
+      <div class="greeting-actions">
+        <button class="g-btn primary" onclick="showPage('crops', null)" id="ga-add">+ पीक जोडा</button>
+        <button class="g-btn outline" onclick="showPage('disease', null)" id="ga-dis">रोग तपासा</button>
+      </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="alert warning">⚠️ <span id="al1">उद्या पाऊस येण्याची शक्यता आहे — ऊस शेतात पाण्याचा निचरा तपासा.</span></div>
+    <div class="alert info">ℹ️ <span id="al2">PM किसान सन्मान निधी ₹4000 तुमच्या खात्यात जमा झाले आहेत.</span></div>
+
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card green">
+        <div class="stat-icon">🌾</div>
+        <div class="stat-val">4</div>
+        <div class="stat-label" id="sc1">सक्रिय पिके</div>
+        <div class="stat-delta">↑ 1 नवीन या महिन्यात</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon">💰</div>
+        <div class="stat-val">₹2.4L</div>
+        <div class="stat-label" id="sc2">या हंगामातील उत्पन्न</div>
+        <div class="stat-delta">↑ 18% मागील वर्षापेक्षा</div>
+      </div>
+      <div class="stat-card sky">
+        <div class="stat-icon">💧</div>
+        <div class="stat-val">68%</div>
+        <div class="stat-label" id="sc3">जमिनीतील आर्द्रता</div>
+        <div class="stat-delta neg">↓ सिंचन सुचवले</div>
+      </div>
+      <div class="stat-card terra">
+        <div class="stat-icon">📦</div>
+        <div class="stat-val">₹86K</div>
+        <div class="stat-label" id="sc4">या महिन्याचा खर्च</div>
+        <div class="stat-delta">बजेटच्या 72%</div>
+      </div>
+    </div>
+
+    <div class="three-col">
+      <!-- CROP STATUS -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-head-title" id="ch-crop">🌱 माझी पिके</div>
+            <div class="card-head-sub" id="ch-crop-s">4 पिके सक्रिय</div>
+          </div>
+          <div class="card-head-action" onclick="showPage('crops', null)" id="ca-crop">सर्व पहा</div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table class="crop-table">
+            <thead>
+              <tr>
+                <th id="th-crop">पीक</th>
+                <th id="th-area">क्षेत्र</th>
+                <th id="th-status">स्थिती</th>
+                <th id="th-prog">प्रगती</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🌾 ऊस</td>
+                <td>4 एकर</td>
+                <td><span class="crop-badge cb-growing" id="cs-growing">वाढत आहे</span></td>
+                <td>
+                  <div class="progress-bar"><div class="progress-fill pf-green" style="width:72%"></div></div>
+                  <div style="font-size:10px;color:var(--text-light);margin-top:2px">72%</div>
+                </td>
+              </tr>
+              <tr>
+                <td>🍇 द्राक्ष</td>
+                <td>2 एकर</td>
+                <td><span class="crop-badge cb-ready" id="cs-ready">काढणीस तयार</span></td>
+                <td>
+                  <div class="progress-bar"><div class="progress-fill pf-gold" style="width:95%"></div></div>
+                  <div style="font-size:10px;color:var(--text-light);margin-top:2px">95%</div>
+                </td>
+              </tr>
+              <tr>
+                <td>🧅 कांदा</td>
+                <td>1.5 एकर</td>
+                <td><span class="crop-badge cb-growing" id="cs-growing2">वाढत आहे</span></td>
+                <td>
+                  <div class="progress-bar"><div class="progress-fill pf-green" style="width:45%"></div></div>
+                  <div style="font-size:10px;color:var(--text-light);margin-top:2px">45%</div>
+                </td>
+              </tr>
+              <tr>
+                <td>🌽 मका</td>
+                <td>1 एकर</td>
+                <td><span class="crop-badge cb-sold" id="cs-sold">विकले</span></td>
+                <td>
+                  <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#60A5FA"></div></div>
+                  <div style="font-size:10px;color:var(--text-light);margin-top:2px">100%</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- WEATHER MINI -->
+      <div class="card" style="overflow:hidden">
+        <div class="card-head">
+          <div><div class="card-head-title" id="ch-wthr">🌤 हवामान</div></div>
+          <div class="card-head-action" onclick="showPage('weather', null)" id="ca-wthr">विस्तार</div>
+        </div>
+        <div class="weather-detail">
+          <div class="w-main">
+            <div>
+              <div class="w-big-temp">29°C</div>
+              <div class="w-condition" id="wd-cond">अंशतः ढगाळ</div>
+              <div class="w-city">सांगली, महाराष्ट्र</div>
+              <div class="w-device">📡 NodeMCU Field Sensor</div>
+            </div>
+            <div style="font-size:56px">⛅</div>
+          </div>
+          <div class="w-details-grid">
+            <div class="w-detail-item">
+              <div class="w-d-label" id="wl-hum">आर्द्रता</div>
+              <div class="w-d-val">68<span class="w-d-unit">%</span></div>
+            </div>
+            <div class="w-detail-item">
+              <div class="w-d-label" id="wl-wind">वारा</div>
+              <div class="w-d-val">12<span class="w-d-unit">km/h</span></div>
+            </div>
+            <div class="w-detail-item">
+              <div class="w-d-label" id="wl-rain">पाऊस</div>
+              <div class="w-d-val">2<span class="w-d-unit">mm</span></div>
+            </div>
+            <div class="w-detail-item">
+              <div class="w-d-label" id="wl-soil">माती उष्णता</div>
+              <div class="w-d-val">24<span class="w-d-unit">°C</span></div>
+            </div>
+          </div>
+          <div class="sensor-badge"><div class="sensor-dot"></div> <span id="sens-live">Field Sensor Live · शेत A-1</span></div>
+          <div style="height:12px"></div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <div class="card">
+        <div class="card-head">
+          <div><div class="card-head-title" id="ch-act">🕐 अलीकडील नोंदी</div></div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot" style="background:#D8F3DC">🌱</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title" id="tl1">ऊस लागण नोंदवली</div>
+                <div class="tl-desc" id="tl1d">शेत B-2 · 4 एकर</div>
+                <div class="tl-date">2 मे 2025</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot" style="background:#FEF3C7">💊</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title" id="tl2">खत वापर नोंद</div>
+                <div class="tl-desc" id="tl2d">DAP 50kg · ₹1,400</div>
+                <div class="tl-date">30 एप्रिल 2025</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot" style="background:#EDE9FE">🔬</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title" id="tl3">AI रोग तपासणी</div>
+                <div class="tl-desc" id="tl3d">द्राक्ष · करपा · उपाय दिले</div>
+                <div class="tl-date">28 एप्रिल 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CROPS PAGE ===== -->
+  <div class="page" id="page-crops">
+    <div class="section-hd"><span class="hdico">🌾</span> <span id="cp-title">पीक व्यवस्थापन</span></div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <div><div class="card-head-title" id="cp-add-title">नवीन पीक जोडा</div></div>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="fl-cropname">पिकाचे नाव</label>
+              <select class="form-select">
+                <option>ऊस (Sugarcane)</option>
+                <option>द्राक्ष (Grapes)</option>
+                <option>कांदा (Onion)</option>
+                <option>टोमॅटो (Tomato)</option>
+                <option>मका (Corn)</option>
+                <option>गहू (Wheat)</option>
+                <option>सोयाबीन (Soybean)</option>
+                <option>कापूस (Cotton)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="fl-area">क्षेत्र (एकर)</label>
+              <input type="number" class="form-input" placeholder="उदा: 2.5">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="fl-sdate">लागण तारीख</label>
+              <input type="date" class="form-input" value="2025-05-02">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="fl-edate">अपेक्षित काढणी</label>
+              <input type="date" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="fl-field">शेत क्रमांक</label>
+              <input type="text" class="form-input" placeholder="उदा: A-1, B-2">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="fl-variety">वाण</label>
+              <input type="text" class="form-input" placeholder="उदा: CO-86032">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="fl-notes">नोट्स</label>
+            <textarea class="form-input" rows="3" style="resize:vertical" placeholder="काही नोंद करायची असल्यास लिहा..."></textarea>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-primary" id="btn-savecrop">💾 नोंद जतन करा</button>
+            <button class="btn-outline" id="btn-clrcrop">रद्द करा</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CROP TIMELINE -->
+      <div class="card">
+        <div class="card-head">
+          <div><div class="card-head-title" id="cp-hist">पीक वाढीचा आढावा</div></div>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:14px;font-weight:700">🌾 ऊस — शेत B-2</span>
+              <span class="badge badge-green">72% पूर्ण</span>
+            </div>
+            <div class="progress-bar" style="height:10px"><div class="progress-fill pf-green" style="width:72%"></div></div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot-wrap"><div class="tl-dot" style="background:#D8F3DC;font-size:12px">✅</div><div class="tl-line"></div></div>
+              <div class="tl-content"><div class="tl-title">जमीन तयारी</div><div class="tl-date">10 जानेवारी 2025</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap"><div class="tl-dot" style="background:#D8F3DC;font-size:12px">✅</div><div class="tl-line"></div></div>
+              <div class="tl-content"><div class="tl-title">लागण केली</div><div class="tl-date">20 जानेवारी 2025</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap"><div class="tl-dot" style="background:#D8F3DC;font-size:12px">✅</div><div class="tl-line"></div></div>
+              <div class="tl-content"><div class="tl-title">पहिले खत (DAP)</div><div class="tl-date">5 फेब्रुवारी 2025</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap"><div class="tl-dot" style="background:#FEF3C7;font-size:12px">🔄</div><div class="tl-line"></div></div>
+              <div class="tl-content"><div class="tl-title">वाढ अवस्था</div><div class="tl-date">सध्या (मे 2025)</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap"><div class="tl-dot" style="background:#F3F4F6;font-size:12px">⏳</div></div>
+              <div class="tl-content"><div class="tl-title">काढणी (अपेक्षित)</div><div class="tl-date">नोव्हेंबर 2025</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WEATHER PAGE ===== -->
+  <div class="page" id="page-weather">
+    <div class="section-hd"><span class="hdico">🌤</span> हवामान माहिती — NodeMCU Field Sensor</div>
+    <div class="alert success">📡 <span>Field Sensor A-1 · Live Data · शेवटचे अपडेट: आत्ता 2 मिनिटांपूर्वी</span></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+      <div class="stat-card sky" style="text-align:center">
+        <div class="stat-icon">🌡</div><div class="stat-val">29°C</div>
+        <div class="stat-label">तापमान</div><div class="stat-delta">Normal range</div>
+      </div>
+      <div class="stat-card green" style="text-align:center">
+        <div class="stat-icon">💧</div><div class="stat-val">68%</div>
+        <div class="stat-label">आर्द्रता</div><div class="stat-delta neg">कमी — सिंचन करा</div>
+      </div>
+      <div class="stat-card gold" style="text-align:center">
+        <div class="stat-icon">💨</div><div class="stat-val">12</div>
+        <div class="stat-label">वारा km/h</div><div class="stat-delta">NW दिशेने</div>
+      </div>
+      <div class="stat-card terra" style="text-align:center">
+        <div class="stat-icon">🌧</div><div class="stat-val">2mm</div>
+        <div class="stat-label">आजचा पाऊस</div><div class="stat-delta">उद्या 15mm अपेक्षित</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><div class="card-head-title">📡 NodeMCU Sensor Readings</div></div>
+        <div class="card-body">
+          <table class="crop-table">
+            <thead><tr><th>Sensor</th><th>शेत</th><th>मूल्य</th><th>स्थिती</th></tr></thead>
+            <tbody>
+              <tr><td>🌡 Temperature</td><td>A-1</td><td>29.2°C</td><td><span class="badge badge-green">Normal</span></td></tr>
+              <tr><td>💧 Soil Moisture</td><td>A-1</td><td>68%</td><td><span class="badge badge-gold">Low</span></td></tr>
+              <tr><td>💡 Light (LUX)</td><td>A-1</td><td>54,200</td><td><span class="badge badge-green">Good</span></td></tr>
+              <tr><td>🧪 Soil pH</td><td>B-2</td><td>6.8</td><td><span class="badge badge-green">Ideal</span></td></tr>
+              <tr><td>⚡ NPK — N</td><td>B-2</td><td>42 mg/kg</td><td><span class="badge badge-gold">Medium</span></td></tr>
+              <tr><td>🌧 Rain Gauge</td><td>Main</td><td>2.1 mm</td><td><span class="badge badge-sky">Recorded</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-head-title">🗓 7-दिवसीय हवामान अंदाज</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:#F0FDF4;border-radius:10px">
+              <span>आज · शुक्र</span><span>⛅</span><span style="font-weight:700">28–31°C</span><span style="color:#0EA5E9">2mm 🌧</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:#EFF6FF;border-radius:10px">
+              <span>उद्या · शनि</span><span>🌧</span><span style="font-weight:700">25–29°C</span><span style="color:#DC2626">15mm 🌧🌧</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:#F9FAFB;border-radius:10px">
+              <span>रवि</span><span>⛅</span><span style="font-weight:700">27–30°C</span><span style="color:#0EA5E9">5mm</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:#FFFBEB;border-radius:10px">
+              <span>सोम</span><span>☀️</span><span style="font-weight:700">30–34°C</span><span style="color:#6B7280">0mm</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:#F9FAFB;border-radius:10px">
+              <span>मंगळ</span><span>☀️</span><span style="font-weight:700">31–35°C</span><span style="color:#6B7280">0mm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EXPENSES PAGE ===== -->
+  <div class="page" id="page-expenses">
+    <div class="section-hd"><span class="hdico">💰</span> खर्च व्यवस्थापन</div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><div class="card-head-title">नवीन खर्च जोडा</div></div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">खर्चाचा प्रकार</label>
+              <select class="form-select">
+                <option>बियाणे (Seeds)</option>
+                <option>खत (Fertilizer)</option>
+                <option>कीटकनाशक (Pesticide)</option>
+                <option>मजुरी (Labour)</option>
+                <option>सिंचन (Irrigation)</option>
+                <option>यंत्रे (Machinery)</option>
+                <option>वाहतूक (Transport)</option>
+                <option>इतर (Other)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">रक्कम (₹)</label>
+              <input type="number" class="form-input" placeholder="0.00">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">तारीख</label>
+              <input type="date" class="form-input" value="2025-05-02">
+            </div>
+            <div class="form-group">
+              <label class="form-label">कोणत्या पिकासाठी</label>
+              <select class="form-select">
+                <option>ऊस</option><option>द्राक्ष</option><option>कांदा</option><option>इतर</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">नोट्स / पावती</label>
+            <input type="text" class="form-input" placeholder="दुकान / व्यक्ती / तपशील">
+          </div>
+          <button class="btn-primary">💾 खर्च जतन करा</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-head-title">📊 खर्चाचा आढावा — मे 2025</div></div>
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;margin-bottom:16px;padding:12px;background:#F0FDF4;border-radius:10px">
+            <div><div style="font-size:12px;color:var(--text-light)">एकूण खर्च</div><div style="font-size:22px;font-weight:800;color:var(--green-dark)">₹86,400</div></div>
+            <div><div style="font-size:12px;color:var(--text-light)">बजेट</div><div style="font-size:22px;font-weight:800;color:var(--gold)">₹1,20,000</div></div>
+            <div><div style="font-size:12px;color:var(--text-light)">शिल्लक</div><div style="font-size:22px;font-weight:800;color:#10B981">₹33,600</div></div>
+          </div>
+          <div class="expense-bars">
+            <div class="exp-row"><div class="exp-label">खत</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:80%;background:#2D6A4F">₹24,000</div></div><div class="exp-amount">₹24,000</div></div>
+            <div class="exp-row"><div class="exp-label">मजुरी</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:65%;background:#52B788">₹18,500</div></div><div class="exp-amount">₹18,500</div></div>
+            <div class="exp-row"><div class="exp-label">कीटकनाशक</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:45%;background:#F59E0B">₹12,800</div></div><div class="exp-amount">₹12,800</div></div>
+            <div class="exp-row"><div class="exp-label">सिंचन</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:35%;background:#0EA5E9">₹9,600</div></div><div class="exp-amount">₹9,600</div></div>
+            <div class="exp-row"><div class="exp-label">बियाणे</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:28%;background:#7C3AED">₹7,500</div></div><div class="exp-amount">₹7,500</div></div>
+            <div class="exp-row"><div class="exp-label">इतर</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:20%;background:#6B7280">₹14,000</div></div><div class="exp-amount">₹14,000</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DISEASE PAGE ===== -->
+  <div class="page" id="page-disease">
+    <div class="section-hd"><span class="hdico">🔬</span> AI रोग निदान</div>
+    <div class="two-col">
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-head"><div class="card-head-title">📸 रोगग्रस्त पानाचा फोटो अपलोड करा</div></div>
+          <div class="card-body">
+            <div class="upload-zone" onclick="alert('Camera / Gallery उघडेल...')">
+              <div class="upload-icon">📷</div>
+              <div class="upload-txt">फोटो घ्या किंवा अपलोड करा</div>
+              <div class="upload-sub">JPG, PNG · AI तुमच्या पिकाचा रोग ओळखेल</div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <select class="form-select">
+                <option>ऊस</option><option>द्राक्ष</option><option>कांदा</option><option>गहू</option>
+              </select>
+              <button class="btn-primary" style="flex-shrink:0">🔬 तपासा</button>
+            </div>
+          </div>
+        </div>
+        <div class="ai-result">
+          <div class="ai-result-title">🤖 AI निदान परिणाम — द्राक्ष</div>
+          <div class="ai-result-body">
+            <strong>रोग:</strong> Downy Mildew (केवडा/करपा) — <span style="color:#B91C1C;font-weight:700">उच्च धोका (87% खात्री)</span><br><br>
+            <strong>लक्षणे:</strong> पानाच्या खालील बाजूस पांढरी बुरशी, वरच्या बाजूस पिवळे डाग.<br><br>
+            <strong>उपाय:</strong><br>
+            ✅ Mancozeb 75WP (2g/L पाण्यात) फवारणी करा<br>
+            ✅ Metalaxyl + Mancozeb (Ridomil) 2.5g/L<br>
+            ✅ 7 दिवसांनी पुन्हा फवारणी<br>
+            ✅ पाऊस आधी फवारणी टाळा<br><br>
+            <strong>जवळचे कृषी केंद्र:</strong> पलूस — श्री. रत्नाकर शेती केंद्र (1.2 km) · 📞 9876543210
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-head"><div class="card-head-title">⚠️ सामान्य रोग — या हंगामात</div></div>
+          <div class="card-body" style="padding:14px">
+            <div class="disease-grid">
+              <div class="disease-card">
+                <div class="disease-img red">🍂</div>
+                <div class="disease-info">
+                  <div class="disease-name">करपा</div>
+                  <div class="disease-crop">द्राक्ष</div>
+                  <div class="disease-risk risk-high">उच्च धोका</div>
+                </div>
+              </div>
+              <div class="disease-card">
+                <div class="disease-img yellow">🟡</div>
+                <div class="disease-info">
+                  <div class="disease-name">पानपिवळा</div>
+                  <div class="disease-crop">ऊस</div>
+                  <div class="disease-risk risk-med">मध्यम</div>
+                </div>
+              </div>
+              <div class="disease-card">
+                <div class="disease-img purple">🟣</div>
+                <div class="disease-info">
+                  <div class="disease-name">मर रोग</div>
+                  <div class="disease-crop">कांदा</div>
+                  <div class="disease-risk risk-low">कमी</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-head"><div class="card-head-title">📞 कृषी तज्ञ</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;border:1px solid var(--border);border-radius:10px">
+                <div>
+                  <div style="font-weight:700;font-size:13px">डॉ. सुनील पाटील</div>
+                  <div style="font-size:11px;color:var(--text-light)">कृषी विद्यापीठ, कोल्हापूर</div>
+                </div>
+                <button class="btn-primary" style="padding:8px 14px;font-size:12px">📞 कॉल करा</button>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;border:1px solid var(--border);border-radius:10px">
+                <div>
+                  <div style="font-weight:700;font-size:13px">KCC Helpline</div>
+                  <div style="font-size:11px;color:var(--text-light)">Kisan Call Center</div>
+                </div>
+                <button class="btn-primary" style="padding:8px 14px;font-size:12px">📞 1800-180-1551</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MARKETPLACE PAGE ===== -->
+  <div class="page" id="page-market">
+    <div class="section-hd"><span class="hdico">🛒</span> कृषी बाजारपेठ</div>
+    <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <select class="form-select" style="width:auto">
+        <option>सर्व श्रेणी</option>
+        <option>बियाणे विक्री</option>
+        <option>खत खरेदी</option>
+        <option>माल विक्री</option>
+        <option>यंत्रे भाड्याने</option>
+      </select>
+      <select class="form-select" style="width:auto">
+        <option>सांगली जिल्हा</option>
+        <option>पुणे जिल्हा</option>
+        <option>नाशिक जिल्हा</option>
+      </select>
+      <input type="text" class="form-input" style="width:220px" placeholder="🔍 शोधा...">
+      <button class="btn-primary">माझे विक्री जाहिरात जोडा +</button>
+    </div>
+
+    <!-- LIVE MARKET PRICES -->
+    <div class="alert info">📊 आजचे बाजारभाव — सांगली APMC · 2 मे 2025</div>
+    <div class="market-grid" style="margin-bottom:24px">
+      <div class="market-card">
+        <div class="market-img" style="background:#F0FDF4">🍇</div>
+        <div class="market-body">
+          <div class="m-name">द्राक्ष (Thompson)</div>
+          <div class="m-qty">प्रति kg</div>
+          <div class="m-price">₹85 <span>/ kg</span></div>
+          <div class="m-delta">↑ ₹5 काल पेक्षा</div>
+          <div class="m-seller">📍 सांगली APMC</div>
+          <button class="m-btn">संपर्क करा</button>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-img" style="background:#FEF9C3">🧅</div>
+        <div class="market-body">
+          <div class="m-name">कांदा (Lal)</div>
+          <div class="m-qty">प्रति quintal</div>
+          <div class="m-price">₹1,240 <span>/ qtl</span></div>
+          <div class="m-delta down">↓ ₹40 काल पेक्षा</div>
+          <div class="m-seller">📍 लासलगाव APMC</div>
+          <button class="m-btn">संपर्क करा</button>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-img" style="background:#FFF7ED">🌾</div>
+        <div class="market-body">
+          <div class="m-name">ऊस (FRP)</div>
+          <div class="m-qty">प्रति tonne</div>
+          <div class="m-price">₹3,150 <span>/ ton</span></div>
+          <div class="m-delta">↑ FRP 2025-26</div>
+          <div class="m-seller">📍 विश्वनाथ कारखाना</div>
+          <button class="m-btn">संपर्क करा</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-hd" style="font-size:16px"><span class="hdico">🧪</span> निविष्ठा खरेदी (खत, बियाणे, कीटकनाशक)</div>
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="market-img" style="background:#EDE9FE">🧪</div>
+        <div class="market-body">
+          <div class="m-name">DAP खत 50kg</div>
+          <div class="m-qty">प्रति बॅग</div>
+          <div class="m-price">₹1,350</div>
+          <div class="m-seller">🏪 पलूस कृषी केंद्र · 1.2km</div>
+          <button class="m-btn">ऑर्डर द्या</button>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-img" style="background:#F0FDF4">🌱</div>
+        <div class="market-body">
+          <div class="m-name">ऊस बियाणे CO-86032</div>
+          <div class="m-qty">प्रति 100 cutting</div>
+          <div class="m-price">₹480</div>
+          <div class="m-seller">🏪 सहकारी बियाणे केंद्र</div>
+          <button class="m-btn">ऑर्डर द्या</button>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-img" style="background:#FEF2F2">🚜</div>
+        <div class="market-body">
+          <div class="m-name">ट्रॅक्टर भाडे</div>
+          <div class="m-qty">प्रति तास</div>
+          <div class="m-price">₹850 <span>/ hr</span></div>
+          <div class="m-seller">👨‍🌾 संजय माने · पलूस</div>
+          <button class="m-btn">बुक करा</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCHEMES PAGE ===== -->
+  <div class="page" id="page-schemes">
+    <div class="section-hd"><span class="hdico">📋</span> सरकारी योजना</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:36px">🏆</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--green-dark)">PM किसान सन्मान निधी</div>
+              <div style="font-size:12px;color:var(--text-light);margin:4px 0">₹6,000 / वर्ष · 3 हप्त्यांत</div>
+              <span class="badge badge-green">✅ नोंदणी केली</span>
+              <div style="margin-top:10px;font-size:12px;color:var(--text-mid)">पुढील हप्ता: ऑगस्ट 2025 · ₹2,000</div>
+              <button class="btn-outline" style="padding:7px 14px;font-size:12px;margin-top:10px">स्थिती तपासा</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:36px">🌧</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--green-dark)">पीक विमा (PMFBY)</div>
+              <div style="font-size:12px;color:var(--text-light);margin:4px 0">खरीफ 2025 · नोंदणी सुरू</div>
+              <span class="badge badge-gold">⏳ अर्ज करा</span>
+              <div style="margin-top:10px;font-size:12px;color:var(--text-mid)">अंतिम मुदत: 31 जुलै 2025</div>
+              <button class="btn-primary" style="padding:7px 14px;font-size:12px;margin-top:10px">अर्ज करा</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:36px">💧</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--green-dark)">ठिबक सिंचन अनुदान</div>
+              <div style="font-size:12px;color:var(--text-light);margin:4px 0">55% पर्यंत अनुदान · NHM</div>
+              <span class="badge badge-sky">📋 कागदपत्रे तयार करा</span>
+              <div style="margin-top:10px;font-size:12px;color:var(--text-mid)">जिल्हा कार्यालयात अर्ज द्या</div>
+              <button class="btn-outline" style="padding:7px 14px;font-size:12px;margin-top:10px">अधिक माहिती</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:36px">🏦</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--green-dark)">किसान क्रेडिट कार्ड</div>
+              <div style="font-size:12px;color:var(--text-light);margin:4px 0">4% व्याजदर · ₹3 लाखपर्यंत</div>
+              <span class="badge badge-green">✅ मंजूर ₹2.5L</span>
+              <div style="margin-top:10px;font-size:12px;color:var(--text-mid)">वापरलेले: ₹86,400 | शिल्लक: ₹1,63,600</div>
+              <button class="btn-outline" style="padding:7px 14px;font-size:12px;margin-top:10px">विवरण पहा</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN PAGE ===== -->
+  <div class="page" id="page-admin">
+    <div class="section-hd"><span class="hdico">🗺</span> Admin — गाव-जिल्हानिहाय डेटा</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+      <div class="stat-card green"><div class="stat-icon">👨‍🌾</div><div class="stat-val">2,84K</div><div class="stat-label">एकूण शेतकरी</div></div>
+      <div class="stat-card gold"><div class="stat-icon">🏘</div><div class="stat-val">14,820</div><div class="stat-label">नोंदणीकृत गावे</div></div>
+      <div class="stat-card sky"><div class="stat-icon">🌾</div><div class="stat-val">6.2L</div><div class="stat-label">एकर नोंदणी</div></div>
+      <div class="stat-card terra"><div class="stat-icon">💰</div><div class="stat-val">₹4.8Cr</div><div class="stat-label">बाजार व्यवहार</div></div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <div><div class="card-head-title">🗺 महाराष्ट्र — जिल्हानिहाय पीक नकाशा</div></div>
+          <select class="form-select" style="width:auto;padding:6px 10px;font-size:12px">
+            <option>सर्व जिल्हे</option>
+            <option>सांगली</option>
+            <option>पुणे</option>
+            <option>नाशिक</option>
+          </select>
+        </div>
+        <div class="card-body">
+          <div class="map-placeholder">
+            <div class="map-dot" style="width:20px;height:20px;top:40%;left:35%"></div>
+            <div class="map-dot" style="width:30px;height:30px;top:55%;left:45%;animation-delay:0.5s"></div>
+            <div class="map-dot" style="width:15px;height:15px;top:30%;left:60%;animation-delay:1s"></div>
+            <div class="map-dot" style="width:25px;height:25px;top:65%;left:30%;animation-delay:1.5s"></div>
+            <div class="map-dot" style="width:18px;height:18px;top:45%;left:70%;animation-delay:0.8s"></div>
+            <div style="text-align:center;z-index:1">
+              <div style="font-size:36px">🗺</div>
+              <div style="font-size:13px;color:var(--green-mid);font-weight:600">महाराष्ट्र कृषी नकाशा</div>
+              <div style="font-size:11px;color:var(--text-light);margin-top:4px">Google Maps API येथे integrate होईल<br>Spring Boot + Leaflet.js</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-head-title">🏘 जिल्हानिहाय शेतकरी</div></div>
+          <div class="card-body" style="padding:0">
+            <table class="crop-table">
+              <thead><tr><th>जिल्हा</th><th>गावे</th><th>शेतकरी</th><th>एकर</th></tr></thead>
+              <tbody>
+                <tr><td>सांगली</td><td>823</td><td>42,150</td><td>96,400</td></tr>
+                <tr><td>पुणे</td><td>1,842</td><td>98,320</td><td>2,10,500</td></tr>
+                <tr><td>नाशिक</td><td>1,567</td><td>78,640</td><td>1,85,000</td></tr>
+                <tr><td>सोलापूर</td><td>944</td><td>38,200</td><td>87,600</td></tr>
+                <tr><td>अहमदनगर</td><td>1,102</td><td>27,002</td><td>41,500</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-head-title">📊 पीकनिहाय आकडेवारी</div></div>
+          <div class="card-body">
+            <div class="expense-bars">
+              <div class="exp-row"><div class="exp-label">ऊस</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:85%;background:#2D6A4F">2.1L एकर</div></div></div>
+              <div class="exp-row"><div class="exp-label">सोयाबीन</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:65%;background:#F59E0B">1.4L एकर</div></div></div>
+              <div class="exp-row"><div class="exp-label">कापूस</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:50%;background:#C05621">92K एकर</div></div></div>
+              <div class="exp-row"><div class="exp-label">द्राक्ष</div><div class="exp-bar-wrap"><div class="exp-bar" style="width:35%;background:#7C3AED">48K एकर</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-area -->
+
+<script>
+const translations = {
+  mr: {
+    slTagline:'कृषिमित्र', nlMain:'मुख्य', nlSvc:'सेवा', nlAdmin:'प्रशासन',
+    fcName:'रामराव पाटील', fcVillage:'📍 सांगली जिल्हा, पलूस तालुका',
+    fcT1:'ऊस', fcT2:'द्राक्ष', fcT3:'PM किसान ✓',
+    nDash:'डॅशबोर्ड', nCrop:'माझी पिके', nWthr:'हवामान',
+    nExp:'खर्च नोंदी', nDis:'रोग निदान', nMkt:'बाजार',
+    nSch:'सरकारी योजना', nAdm:'Admin नकाशा', nOut:'लॉगआउट',
+    greetTxt:'🙏 नमस्कार,', greetName:'रामराव पाटील',
+    greetInfo:'📅 शुक्रवार, 2 मे 2025 · सांगली · खरीफ हंगाम 2025',
+    greetWthr:'सांगली जिल्हा · अंशतः ढगाळ',
+    gaAdd:'+ पीक जोडा', gaDis:'रोग तपासा',
+    al1:'उद्या पाऊस येण्याची शक्यता आहे — ऊस शेतात पाण्याचा निचरा तपासा.',
+    al2:'PM किसान सन्मान निधी ₹4000 तुमच्या खात्यात जमा झाले आहेत.',
+    sc1:'सक्रिय पिके', sc2:'या हंगामातील उत्पन्न',
+    sc3:'जमिनीतील आर्द्रता', sc4:'या महिन्याचा खर्च',
+    chCrop:'🌱 माझी पिके', chCropS:'4 पिके सक्रिय', caCrop:'सर्व पहा',
+    thCrop:'पीक', thArea:'क्षेत्र', thStatus:'स्थिती', thProg:'प्रगती',
+    csGrowing:'वाढत आहे', csReady:'काढणीस तयार', csSold:'विकले',
+    chWthr:'🌤 हवामान', caWthr:'विस्तार', wdCond:'अंशतः ढगाळ',
+    wlHum:'आर्द्रता', wlWind:'वारा', wlRain:'पाऊस', wlSoil:'माती उष्णता',
+    sensLive:'Field Sensor Live · शेत A-1',
+    chAct:'🕐 अलीकडील नोंदी',
+    tl1:'ऊस लागण नोंदवली', tl1d:'शेत B-2 · 4 एकर',
+    tl2:'खत वापर नोंद', tl2d:'DAP 50kg · ₹1,400',
+    tl3:'AI रोग तपासणी', tl3d:'द्राक्ष · करपा · उपाय दिले',
+  },
+  hi: {
+    slTagline:'कृषिमित्र', nlMain:'मुख्य', nlSvc:'सेवाएं', nlAdmin:'प्रशासन',
+    fcName:'रामराव पाटील', fcVillage:'📍 सांगली जिला, पलूस तालुका',
+    fcT1:'गन्ना', fcT2:'अंगूर', fcT3:'PM किसान ✓',
+    nDash:'डैशबोर्ड', nCrop:'मेरी फसलें', nWthr:'मौसम',
+    nExp:'खर्च रिकॉर्ड', nDis:'रोग निदान', nMkt:'बाजार',
+    nSch:'सरकारी योजनाएं', nAdm:'Admin नक्शा', nOut:'लॉगआउट',
+    greetTxt:'🙏 नमस्ते,', greetName:'रामराव पाटील',
+    greetInfo:'📅 शुक्रवार, 2 मई 2025 · सांगली · खरीफ सीजन 2025',
+    greetWthr:'सांगली जिला · आंशिक बादल',
+    gaAdd:'+ फसल जोड़ें', gaDis:'रोग जांचें',
+    al1:'कल बारिश की संभावना है — गन्ने के खेत में जल निकासी जांचें।',
+    al2:'PM किसान सम्मान निधि ₹4000 आपके खाते में जमा हो गए हैं।',
+    sc1:'सक्रिय फसलें', sc2:'इस सीजन की आमदनी',
+    sc3:'मिट्टी की नमी', sc4:'इस महीने का खर्च',
+    chCrop:'🌱 मेरी फसलें', chCropS:'4 फसलें सक्रिय', caCrop:'सब देखें',
+    thCrop:'फसल', thArea:'क्षेत्र', thStatus:'स्थिति', thProg:'प्रगति',
+    csGrowing:'उग रही है', csReady:'कटाई के लिए तैयार', csSold:'बेचा',
+    chWthr:'🌤 मौसम', caWthr:'विस्तार', wdCond:'आंशिक बादल',
+    wlHum:'आर्द्रता', wlWind:'हवा', wlRain:'बारिश', wlSoil:'मिट्टी तापमान',
+    sensLive:'Field Sensor Live · खेत A-1',
+    chAct:'🕐 हाल की गतिविधि',
+    tl1:'गन्ना बुवाई दर्ज की', tl1d:'खेत B-2 · 4 एकड़',
+    tl2:'उर्वरक उपयोग दर्ज', tl2d:'DAP 50kg · ₹1,400',
+    tl3:'AI रोग जांच', tl3d:'अंगूर · फफूंदी · उपाय दिए',
+  },
+  en: {
+    slTagline:'Your Farm Partner', nlMain:'MAIN', nlSvc:'SERVICES', nlAdmin:'ADMIN',
+    fcName:'Ramrao Patil', fcVillage:'📍 Sangli District, Palus Taluka',
+    fcT1:'Sugarcane', fcT2:'Grapes', fcT3:'PM Kisan ✓',
+    nDash:'Dashboard', nCrop:'My Crops', nWthr:'Weather',
+    nExp:'Expenses', nDis:'Disease AI', nMkt:'Marketplace',
+    nSch:'Govt. Schemes', nAdm:'Admin Map', nOut:'Logout',
+    greetTxt:'👋 Welcome back,', greetName:'Ramrao Patil',
+    greetInfo:'📅 Friday, 2 May 2025 · Sangli · Kharif Season 2025',
+    greetWthr:'Sangli District · Partly Cloudy',
+    gaAdd:'+ Add Crop', gaDis:'Diagnose Disease',
+    al1:'Rain expected tomorrow — check drainage in sugarcane fields.',
+    al2:'PM Kisan Samman Nidhi ₹4000 has been deposited in your account.',
+    sc1:'Active Crops', sc2:'This Season Revenue',
+    sc3:'Soil Moisture', sc4:"This Month's Expenses",
+    chCrop:'🌱 My Crops', chCropS:'4 Active Crops', caCrop:'View All',
+    thCrop:'Crop', thArea:'Area', thStatus:'Status', thProg:'Progress',
+    csGrowing:'Growing', csReady:'Ready to Harvest', csSold:'Sold',
+    chWthr:'🌤 Weather', caWthr:'Details', wdCond:'Partly Cloudy',
+    wlHum:'Humidity', wlWind:'Wind', wlRain:'Rainfall', wlSoil:'Soil Temp',
+    sensLive:'Field Sensor Live · Plot A-1',
+    chAct:'🕐 Recent Activity',
+    tl1:'Sugarcane planting recorded', tl1d:'Field B-2 · 4 Acres',
+    tl2:'Fertilizer usage logged', tl2d:'DAP 50kg · ₹1,400',
+    tl3:'AI Disease Check', tl3d:'Grapes · Downy Mildew · Cure given',
+  }
+};
+
+const pages = {
+  dashboard: { title: '🏠 डॅशबोर्ड', bc: 'KrushiMitra › डॅशबोर्ड' },
+  crops:     { title: '🌾 माझी पिके', bc: 'KrushiMitra › पिके' },
+  weather:   { title: '🌤 हवामान', bc: 'KrushiMitra › हवामान' },
+  expenses:  { title: '💰 खर्च नोंदी', bc: 'KrushiMitra › खर्च' },
+  disease:   { title: '🔬 रोग निदान', bc: 'KrushiMitra › रोग AI' },
+  market:    { title: '🛒 बाजारपेठ', bc: 'KrushiMitra › बाजार' },
+  schemes:   { title: '📋 सरकारी योजना', bc: 'KrushiMitra › योजना' },
+  admin:     { title: '🗺 Admin नकाशा', bc: 'KrushiMitra › Admin' },
+};
+
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if(navEl) navEl.classList.add('active');
+  const pg = pages[id];
+  if(pg) { document.getElementById('pt').textContent = pg.title; document.getElementById('pb').textContent = pg.bc; }
+}
+
+function setLang(lang) {
+  document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-pill[onclick="setLang('${lang}')"]`).classList.add('active');
+  const t = translations[lang];
+  const map = {
+    'sl-tagline':t.slTagline,'nl-main':t.nlMain,'nl-svc':t.nlSvc,'nl-admin':t.nlAdmin,
+    'fc-name':t.fcName,'fc-village':t.fcVillage,'fc-t1':t.fcT1,'fc-t2':t.fcT2,'fc-t3':t.fcT3,
+    'n-dash':t.nDash,'n-crop':t.nCrop,'n-wthr':t.nWthr,'n-exp':t.nExp,'n-dis':t.nDis,
+    'n-mkt':t.nMkt,'n-sch':t.nSch,'n-adm':t.nAdm,'n-out':t.nOut,
+    'greet-txt':t.greetTxt,'greet-name':t.greetName,'greet-info':t.greetInfo,'greet-wthr':t.greetWthr,
+    'ga-add':t.gaAdd,'ga-dis':t.gaDis,'al1':t.al1,'al2':t.al2,
+    'sc1':t.sc1,'sc2':t.sc2,'sc3':t.sc3,'sc4':t.sc4,
+    'ch-crop':t.chCrop,'ch-crop-s':t.chCropS,'ca-crop':t.caCrop,
+    'th-crop':t.thCrop,'th-area':t.thArea,'th-status':t.thStatus,'th-prog':t.thProg,
+    'cs-growing':t.csGrowing,'cs-growing2':t.csGrowing,'cs-ready':t.csReady,'cs-sold':t.csSold,
+    'ch-wthr':t.chWthr,'ca-wthr':t.caWthr,'wd-cond':t.wdCond,
+    'wl-hum':t.wlHum,'wl-wind':t.wlWind,'wl-rain':t.wlRain,'wl-soil':t.wlSoil,
+    'sens-live':t.sensLive,'ch-act':t.chAct,
+    'tl1':t.tl1,'tl1d':t.tl1d,'tl2':t.tl2,'tl2d':t.tl2d,'tl3':t.tl3,'tl3d':t.tl3d,
+  };
+  for(const [id, val] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    if(el) el.textContent = val;
+  }
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>
